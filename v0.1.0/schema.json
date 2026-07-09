@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json#",
+  "title": "Asset Templates Extension",
+  "description": "STAC Asset Templates Extension for STAC Items and STAC Collections.",
+  "type": "object",
+  "required": [
+    "stac_extensions",
+    "type",
+    "assetTemplates"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json"
+      }
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Feature",
+        "Catalog",
+        "Collection"
+      ]
+    },
+    "assetTemplates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "uriTemplate"
+        ],
+        "properties": {
+          "href": {
+            "$comment": "Disallow the href property",
+            "not": {}
+          },
+          "uriTemplate": {
+            "type": "string",
+            "description": "Supplies a resolvable URI to a remote resource (or resource fragment)."
+          },
+          "varBase": {
+            "type": "string",
+            "description": "The base URI to which the variable name can be appended to retrieve the definition of the variable as a JSON Schema fragment.",
+            "format": "uri-reference"
+          },
+          "variables": {
+            "type": "object",
+            "description": "This object contains one key per substitution variable in the templated URL.  Each key defines the schema of one substitution variable using a JSON Schema fragment and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc."
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$comment": "title, roles, description, updated, created, etc. are defined through the common metadata and are not included above",
+        "allOf": [
+          {
+            "$ref": "https://schemas.stacspec.org/v1.1.0/item-spec/json-schema/common.json"
+          }
+        ]
+      }
+    }
+  }
+}
