@@ -1,24 +1,25 @@
-# Link Templates Extension Specification
+# Asset Templates Extension Specification
 
-- **Title:** Link Templates
-- **Identifier:** <https://stac-extensions.github.io/link-templates/v1.0.0/schema.json>
+- **Title:** Asset Templates
+- **Identifier:** <https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json>
 - **Field Name Prefix:** -
-- **Scope:** Item, Collection, Catalog
+- **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @m-mohr
 
-This document explains the Link Templates Extension to the
+This document explains the Asset Templates Extension to the
 [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 
-This extension offers a way to properly expose templated links in STAC, which are similar to the `links` array in STAC.
+This extension offers a way to properly expose templated URLs for Assets in STAC, which are similar to the `assets` object in STAC.
 The difference is that the URI can contain variables, so can't be resolved without replacing the variables with specific values.
 
-Potential usecases are exposing links to ZARR chunks or web map links such as XYZ.
+Potential usecases are exposing assets to ZARR chunks or partitioned Parquet files.
 
-All specifications originate from [`linkTemplates` as defined in OGC API - Records](https://docs.ogc.org/DRAFTS/20-004r1.html#sc_templated_links_with_variables).
+All specifications are inspired by the`linkTemplates` in the
+[STAC Link Templates extension](https://github.com/stac-extensions/link-templates), which itself is
+[defined in OGC API - Records](https://docs.ogc.org/DRAFTS/20-004r1.html#sc_templated_links_with_variables).
 
 - Examples:
-  - [STAC Item](examples/item.json)
   - [STAC Collection](examples/collection.json)
 - [JSON Schema](json-schema/schema.json)
 - [Changelog](./CHANGELOG.md)
@@ -27,27 +28,24 @@ All specifications originate from [`linkTemplates` as defined in OGC API - Recor
 
 The fields in the table below can be used in these parts of STAC documents:
 
-- [x] Catalogs
+- [ ] Catalogs
 - [x] Collections
 - [x] Item
 - [ ] Item Properties (incl. Summaries in Collections)
 - [ ] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
 - [ ] Links
 
-| Field Name    | Type                                              | Description                                |
-| ------------- | ------------------------------------------------- | ------------------------------------------ |
-| linkTemplates | \[[Link Templates Object](#link-templates-object)] | **REQUIRED**. An array of templated links. |
+| Field Name    | Type | Description |
+| ------------- | ---- | ----------- |
+| assetTemplates | Map\<string, [Asset Templates Object](#asset-templates-object)> | **REQUIRED**. An object of asset names mapping to templated assets. |
 
-In case of doubt, the defintions in OGC API - Records are normative.
-[See OGC API - Records for more details.](https://docs.ogc.org/DRAFTS/20-004r1.html#sc_templated_links_with_variables).
+### Asset Templates Object
 
-### Link Templates Object
-
-The Link Templates Object follows the definition of the STAC
-[Link Object](https://github.com/radiantearth/stac-spec/blob/master/commons/links.md#link-object),
+The Asset Templates Object follows the definition of the STAC
+[Asset Object](https://github.com/radiantearth/stac-spec/blob/master/commons/assets.md#asset-object),
 except that it has no `href`.
 
-Instead of the `href`, the Link Template Object adds the following fields to the Link Object:
+Instead of the `href`, the Asset Template Object adds the following fields to the Asset Object:
 
 | Field Name  | Type             | Description |
 | ----------- | ---------------- | ----------- |
@@ -55,38 +53,11 @@ Instead of the `href`, the Link Template Object adds the following fields to the
 | varBase     | string           | The base URI to which the variable name can be appended to retrieve the definition of the variable as a JSON Schema fragment. |
 | variables   | Map\<string, \*> | This object contains one key per substitution variable in the templated URL.  Each key defines the schema of one substitution variable using a JSON Schema fragment and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc. |
 
-Additionaly, the following fields can be used as defined STAC and OGC API - Records:
+Additionaly, all fields that can be used as defined STAC in Asset Objects, for examnple:
 
-- `rel` - **REQUIRED**
+- `roles`
 - `type`
 - `title`
-- `created`
-- `updated`
-
-The following fields are only defined in the STAC Link Object, but not in OGC API - Records, and can be used as well:
-
-- `method`
-- `headers`
-- `body`
-
-The following fields are only defined in OGC API - Records, but not in the STAC Link Object, and can be used as well:
-
-- `hreflang`
-- `length` (note: [`file:size`](https://github.com/stac-extensions/file) is better suited in a STAC context)
-- `profile`
-
-## Relation types
-
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
-
-| Type  | Description                           |
-| ----- | ------------------------------------- |
-| asset | Identifies link templates that point to asset-like resources. |
-
-The `asset` relation type plugs a gap between OGC API - Records and STAC.
-As there's no construct to define templated links in assets and OGC API - Records has no notion of assets,
-we use the relation type to enable linked templates for asset-like resources.
 
 ## Contributing
 

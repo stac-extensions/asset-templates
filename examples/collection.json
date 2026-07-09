@@ -1,8 +1,7 @@
 {
-  "stac_version": "1.0.0",
+  "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/link-templates/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json"
   ],
   "type": "Collection",
   "id": "collection",
@@ -58,13 +57,31 @@
       "rel": "item"
     }
   ],
-  "linkTemplates": [
+  "assetTemplates": [
     {
-      "rel": "wms",
-      "type": "image/png",
-      "title": "World Ozone and Ultraviolet Radiation Data Centre (WOUDC) stations",
-      "uriTemplate": "https://geo.woudc.org/ows?service=WMS&version=1.3.0&request=GetMap&crs={crs}&bbox={bbox}&layers=stations&width={width}&height={height}&format=image/png",
-      "varBase": "https://example.com/examples/variables.json"
+      "uriTemplate": "s3://example-bucket/buildings/kdtree_cell={cell}/{part}.parquet",
+      "type": "application/vnd.apache.parquet",
+      "title": "A partitioned parquet file",
+      "roles": [
+        "data"
+      ],
+      "variables": {
+        "cell": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ],
+          "default": "A"
+        },
+        "part": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 0
+        }
+      }
     }
   ]
 }

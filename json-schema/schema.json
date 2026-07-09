@@ -1,19 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/link-templates/v1.0.0/schema.json#",
-  "title": "Link Templates Extension",
-  "description": "STAC Link Templates Extension for STAC Items and STAC Collections.",
+  "$id": "https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json#",
+  "title": "Asset Templates Extension",
+  "description": "STAC Asset Templates Extension for STAC Items and STAC Collections.",
   "type": "object",
   "required": [
     "stac_extensions",
     "type",
-    "linkTemplates"
+    "assetTemplates"
   ],
   "properties": {
     "stac_extensions": {
       "type": "array",
       "contains": {
-        "const": "https://stac-extensions.github.io/link-templates/v1.0.0/schema.json"
+        "const": "https://stac-extensions.github.io/asset-templates/v0.1.0/schema.json"
       }
     },
     "type": {
@@ -24,13 +24,12 @@
         "Collection"
       ]
     },
-    "linkTemplates": {
+    "assetTemplates": {
       "type": "array",
       "items": {
         "type": "object",
         "required": [
-          "uriTemplate",
-          "rel"
+          "uriTemplate"
         ],
         "properties": {
           "href": {
@@ -50,48 +49,14 @@
             "type": "object",
             "description": "This object contains one key per substitution variable in the templated URL.  Each key defines the schema of one substitution variable using a JSON Schema fragment and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc."
           },
-          "rel": {
-            "type": "string",
-            "minLength": 1
-          },
-          "type": {
-            "type": "string"
-          },
-          "method": {
-            "type": "string",
-            "pattern": "^[A-Z]+$",
-            "default": "GET"
-          },
-          "headers": {
-            "type": "object",
-            "additionalProperties": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              ]
-            }
-          },
-          "body": {
-            "$comment": "Any type is allowed."
-          },
-          "hreflang": {
-            "type": "string"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "profile": {
+          "roles": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "type": {
+            "type": "string"
           }
         },
         "$comment": "title, roles, description, updated, created, etc. are defined through the common metadata and are not included above",
