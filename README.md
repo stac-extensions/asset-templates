@@ -13,7 +13,16 @@ This document explains the Asset Templates Extension to the
 This extension offers a way to properly expose templated URLs for Assets in STAC, which are similar to the `assets` object in STAC.
 The difference is that the URI can contain variables, so can't be resolved without replacing the variables with specific values.
 
-Potential usecases are exposing assets to ZARR chunks or partitioned Parquet files.
+> [!IMPORTANT]
+> Potential use cases include exposing Zarrs or partitioned Parquet files, where the files are split
+> solely for format-specific reasons and have no use individually.
+>
+> Another use case is machine learning datasets composed of many small patches, where the individual
+> files are too small to be meaningful for use or discovery on their own.
+>
+> This approach should not be used simply to reduce the number of STAC Items for datasets such as
+> standard satellite imagery acquisitions. Instead, it can be used to provide an additional
+> pattern-based access mechanism, for example at the Collection level.
 
 All specifications are inspired by the`linkTemplates` in the
 [STAC Link Templates extension](https://github.com/stac-extensions/link-templates), which itself is
