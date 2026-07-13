@@ -24,8 +24,8 @@
       ]
     },
     "assetTemplates": {
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": {
         "type": "object",
         "required": [
           "uriTemplate"
