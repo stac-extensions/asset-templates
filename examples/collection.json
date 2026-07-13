@@ -57,8 +57,8 @@
       "rel": "item"
     }
   ],
-  "assetTemplates": [
-    {
+  "assetTemplates": {
+    "example": {
       "uriTemplate": "s3://example-bucket/buildings/kdtree_cell={cell}/{part}.parquet",
       "type": "application/vnd.apache.parquet",
       "title": "A partitioned parquet file",
@@ -83,5 +83,5 @@
         }
       }
     }
-  ]
+  }
 }
