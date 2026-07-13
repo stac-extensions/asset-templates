@@ -20,13 +20,12 @@
       "type": "string",
       "enum": [
         "Feature",
-        "Catalog",
         "Collection"
       ]
     },
     "assetTemplates": {
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": {
         "type": "object",
         "required": [
           "uriTemplate"
